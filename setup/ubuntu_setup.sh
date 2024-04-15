@@ -50,8 +50,8 @@ if command -v nvidia-smi &> /dev/null; then
 fi
 
 # Build docker image
-if [[ "$(docker images -q bva2-ml-trainer 2> /dev/null)" == "" ]]; then
-    cd /home/your_vm_username/your_repo && docker build -f dockerfiles/tf2/Dockerfile -t your_container_images:your_container_tag .
+if [[ "$(docker images -q your_docker_image 2> /dev/null)" == "" ]]; then
+    cd /home/your_vm_username/your_repo && docker build -f dockerfiles/tf2/Dockerfile -t your_docker_image:your_container_tag .
 fi
 
 # Run training container and expose port 8888 (EXPOSE 8888 in my dockerfile) for Jupyter
@@ -62,5 +62,5 @@ docker run \
     -p 8888:8888 \
     -e JUPYTER_TOKEN='your_jupyter_password_token' \
     -v /home/your_vm_username/your_repo:/your_workspace_in_container \
-    your_container_images:your_container_tag \
+    your_docker_image:your_container_tag \
     jupyter notebook --ip=0.0.0.0 --port=8888 --allow-root
